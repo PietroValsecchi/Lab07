@@ -18,7 +18,9 @@ class Controller:
         self.genere_selezionato = None
 
     # POPOLA DROPDOWN
-    # TODO
+    def generi(self):
+        model = Model()
+        return model.get_generi()
 
     # CALLBACKS DROPDOWN
     # TODO
