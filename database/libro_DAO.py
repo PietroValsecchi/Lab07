@@ -12,8 +12,7 @@ class LibroDAO:
         pass
 
     def trova_generi(self):
-        db = DBConnect()
-        cnx = db.get_connection()
+        cnx = DBConnect.get_connection()
         if cnx is not None:
             query = "SELECT distinct genere FROM libro"
             cursor = cnx.cursor()
@@ -28,4 +27,25 @@ class LibroDAO:
 
         else:
             return None
+
+
+    def trova_libro(self, biblioteca, genere):
+        cnx = DBConnect.get_connection()
+        if cnx is not None:
+            query = """SELECT l.id, l.titolo, l.autore, l.anno_pubblicazione 
+                        FROM biblioteca b, libro l
+                        WHERE l.id_biblioteca = b.id AND l.genere = COALESCE(%s, l.genere) AND b.nome = COALESCE(%s, b.nome)"""
+            cursor = cnx.cursor()
+            cursor.execute(query, (genere, biblioteca))
+            risultato = []
+            for row in cursor:
+                risultato.append(row)
+            cursor.close()
+            cnx.close()
+            return risultato
+
+        else:
+            return None
+
+
 

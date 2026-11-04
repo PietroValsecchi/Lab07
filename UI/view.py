@@ -36,11 +36,11 @@ class View:
         self.txt_titolo = ft.Text(value="Biblioteche di Torino", size=38, weight=ft.FontWeight.BOLD)
 
         # --- Sezione 2: Filtraggio ---
-        biblioteca = ft.Dropdown(width = 400, label = "Biblioteca")
-        genere = ft.Dropdown(width = 200, label = "Genere", options=[ft.dropdown.Option(g) for g in self.controller.generi()])
+        self.biblioteca = ft.Dropdown(width = 400, label = "Biblioteca", menu_height=350, options=[ft.dropdown.Option("Nessun filtro")] + [ft.dropdown.Option(b) for b in self.controller.biblioteca()])
+        self.genere = ft.Dropdown(width = 200, label = "Genere", menu_height=350, options=[ft.dropdown.Option("Nessun filtro")] + [ft.dropdown.Option(g) for g in self.controller.generi()])
         # Sezione 3: Libri
-        mostra_libri = ft.Button(content = "Mostra libri")
-        self.lista = ft.ListView(width=500, height=300, expand=True, spacing=5, padding=10, auto_scroll=True)
+        btn_mostra_libri = ft.Button(content = "Mostra libri", on_click=self.controller.mostra_libri)
+        self.lista = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
 
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
@@ -54,12 +54,12 @@ class View:
             ft.Divider(),
 
             # Sezione 2: Filtraggio
-            ft.Row(controls= [biblioteca, genere],
+            ft.Row(controls= [self.biblioteca, self.genere],
                    alignment=ft.MainAxisAlignment.CENTER),
             ft.Divider(),
 
             # Sezione 3: Libri
-            ft.Row(controls=[mostra_libri],
+            ft.Row(controls=[btn_mostra_libri],
                    alignment=ft.MainAxisAlignment.CENTER),
 
             self.lista,)

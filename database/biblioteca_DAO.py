@@ -10,4 +10,18 @@ class BibliotecaDAO:
     def __init__(self):
         pass
 
-    # TODO
+    def trova_biblioteche(self):
+        cnx = DBConnect.get_connection()
+        if cnx is not None:
+            query= "SELECT distinct nome FROM biblioteca"
+            cursor = cnx.cursor()
+            cursor.execute(query)
+            bibliotche = []
+            for row in cursor:
+                bibliotche.append(row[0])
+            cursor.close()
+            cnx.close()
+            return bibliotche
+        else:
+            return None
+
