@@ -38,13 +38,7 @@ class Controller:
     # AZIONE: MOSTRA LIBRI
     def mostra_libri(self, e):
         biblioteca=self._view.biblioteca.value
-        if biblioteca is None:
-            self._view.show_alert("❌ Inserisci un filtro valido per la biblioteca!")
-            return
         genere = self._view.genere.value
-        if genere is None:
-            self._view.show_alert("❌ Inserisci un filtro valido per il genere!")
-            return
         if biblioteca == "Nessun filtro":
             biblioteca = None
         if genere == "Nessun filtro":
