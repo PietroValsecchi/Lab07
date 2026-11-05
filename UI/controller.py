@@ -27,13 +27,24 @@ class Controller:
         return model.get_biblioteche()
 
     # CALLBACKS DROPDOWN
-    #TODO
+    def bib(self, e):
+        filtro = self.mostra_libri(self)
+        return filtro
 
+    def gen(self, e):
+        filtro=self.mostra_libri(self)
+        return filtro
 
     # AZIONE: MOSTRA LIBRI
     def mostra_libri(self, e):
         biblioteca=self._view.biblioteca.value
+        if biblioteca is None:
+            self._view.show_alert("❌ Inserisci un filtro valido per la biblioteca!")
+            return
         genere = self._view.genere.value
+        if genere is None:
+            self._view.show_alert("❌ Inserisci un filtro valido per il genere!")
+            return
         if biblioteca == "Nessun filtro":
             biblioteca = None
         if genere == "Nessun filtro":
@@ -43,14 +54,20 @@ class Controller:
 
     def aggiungi_libri(self, libri):
         self._view.lista.controls.clear()
-        for libro in libri:
-            self._view.lista.controls.append(ft.Row(
-                controls=[ft.Text(f"ID : {libro[0]}", size=15),
-                          ft.Text(f"TITOLO : {libro[1]}", size=15),
-                        ft.Text(f"AUTORE : {libro[2]}", size=15),
-                        ft.Text(f"ANNO : {libro[3]}", size=15)],
-                        spacing=25)),
-        self._view.update()
-        return self._view.lista
+        if not libri:
+            self._view.update()
+            self._view.show_alert("❌ Nessun libro trovato!")
+            return
+
+        else:
+            for libro in libri:
+                self._view.lista.controls.append(ft.Row(
+                    controls=[ft.Text(f"ID : {libro[0]}", size=15),
+                              ft.Text(f"TITOLO : {libro[1]}", size=15),
+                              ft.Text(f"AUTORE : {libro[2]}", size=15),
+                              ft.Text(f"ANNO : {libro[3]}", size=15)],
+                              spacing=25)),
+            self._view.update()
+            return self._view.lista
 
 
